@@ -1,0 +1,26 @@
+CC = g++
+CCFLAGS = -Wfatal-errors -I$(IDIR) -I"Z:\SDL2\i686-w64-mingw32\include" -L"Z:\SDL2\i686-w64-mingw32\lib" -lmingw32 -lSDL2main -lSDL2
+IDIR =../include
+
+ODIR=obj
+
+_DEPS = LTimer.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+OBJ = main.o LTimer.o
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CCFLAGS)
+
+main: $(OBJ)
+	$(CC) -o $@ $^ $(CCFLAGS)
+
+.PHONY: clean
+
+clean:
+	del /f *.o
+
+clean-all:
+	del /f *.o *.exe
+
+print-%  : ; @echo $* = $($*)
